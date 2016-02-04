@@ -13,13 +13,13 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         private List<IFigure> FigureList = new List<IFigure>();
-        private IFigure draggedElement;
-        private List<IFigure> draggedElements=new List<IFigure>();
-        private Point draggedPoint;
+        private IFigure _draggedFigure;
+        private List<IFigure> FigureListDragged=new List<IFigure>();
+        private Point _draggedPoint;
 
-        private bool dragEl=false;
+        private bool _dragEl;
 
-        private Point oldMousePosition;
+        private Point _oldMousePosition;
 
         private Random rnd = new Random();
 
@@ -82,105 +82,136 @@ namespace WindowsFormsApplication1
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            foreach (var fl in FigureList)
-            {
-                foreach (var i in fl.GetInnerRectangle())
-                {
-                    if (i.Contains(e.Location))
-                    {
-                        draggedPoint.X = i.X + 4;
-                        draggedPoint.Y = i.Y + 4;
-                        draggedElement = fl;
-                    }
-                }
-            }
+            CheckClickCoal(e);
 
-            Region r = new Region();
+            
+            CheckMoveFigure(e);
+            CheckConnectFigure();
+
+            _oldMousePosition = e.Location;
+        }
+
+       
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            _draggedFigure = null;
+            _draggedPoint = Point.Empty;
+
+            FigureListDragged.Clear();
+         
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            CheckFigureListDragged(e);
+            CheckDraggedFigure(e);
+        }
+
+      
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            _dragEl = false;
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            _dragEl = true;
+        }
+
+        //Check Mouse_Down
+        private void CheckConnectFigure()
+        {
+            Region r;
+            if (_dragEl)
+                if (_draggedFigure != null)
+                    if (!(_draggedFigure is Line))
+                        foreach (var fl in FigureList)
+                        {
+                            if (fl is Line)
+                            {
+                                var o = fl;
+                                r = _draggedFigure.GetFigure();
+                                if (r.IsVisible(o.GetInnerRectangle()[0]) || r.IsVisible(o.GetInnerRectangle()[1]))
+                                {
+                                    FigureListDragged.Add(o);
+                                    FigureListDragged.Add(_draggedFigure);
+                                    foreach (var el in FigureList)
+                                        if (o != el)
+                                            if (el.GetFigure().IsVisible(o.GetInnerRectangle()[0]) ||
+                                                el.GetFigure().IsVisible(o.GetInnerRectangle()[1]))
+                                                if (el != _draggedFigure)
+                                                    FigureListDragged.Add(el);
+                                }
+                            }
+                        }
+        }
+
+        private void CheckMoveFigure(MouseEventArgs e)
+        {
+            var r = new Region();
 
             foreach (var fl in FigureList)
             {
                 r = fl.GetFigure();
                 if (r != null)
                     if (r.IsVisible(e.Location))
-                        draggedElement = fl;
+                        _draggedFigure = fl;
             }
+        }
 
-            if (dragEl)
-            if (draggedElement != null)
-                if (!(draggedElement is Line))
-                    foreach (var fl in FigureList)
+        private void CheckClickCoal(MouseEventArgs e)
+        {
+            foreach (var fl in FigureList)
+            {
+                foreach (var i in fl.GetInnerRectangle())
+                {
+                    if (i.Contains(e.Location))
                     {
-
-                        if (fl is Line)
-                        {
-                            var o = fl;
-                            r = draggedElement.GetFigure();
-                            if (r.IsVisible(o.GetInnerRectangle()[0]) || r.IsVisible(o.GetInnerRectangle()[1]))
-                            {
-                                draggedElements.Add(o);
-                                draggedElements.Add(draggedElement);
-                                foreach (var el in FigureList)
-                                    if(o!=el)
-                                    if (el.GetFigure().IsVisible(o.GetInnerRectangle()[0]) || el.GetFigure().IsVisible(o.GetInnerRectangle()[1]))
-                                        if (el != draggedElement)
-                                            draggedElements.Add(el);
-                            }
-                        }
-
+                        _draggedPoint.X = i.X + 4;
+                        _draggedPoint.Y = i.Y + 4;
+                        _draggedFigure = fl;
                     }
-
-            oldMousePosition = e.Location;
-        }
-
-        private void Form1_MouseUp(object sender, MouseEventArgs e)
-        {
-            draggedElement = null;
-            draggedPoint = Point.Empty;
-
-            draggedElements.Clear();
-         
-        }
-
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (draggedElements.Count!=0)
-            {
-                var dx = e.Location.X - oldMousePosition.X;
-                var dy = e.Location.Y - oldMousePosition.Y;
-                if (dragEl)
-                    foreach(var i in draggedElements)
-                    i.Shift(dx, dy);
-              
-
-                oldMousePosition = e.Location;
-
-                Invalidate();
+                }
             }
-            if (draggedElement != null)
-            {
-                var dx = e.Location.X - oldMousePosition.X;
-                var dy = e.Location.Y - oldMousePosition.Y;
-                if (dragEl)
-                    draggedElement.Shift(dx, dy);
-                else
-                    if(draggedPoint!=Point.Empty)
-                        draggedElement.Shift(dx, dy, draggedPoint);
+        }
 
-                oldMousePosition = e.Location;
-                draggedPoint.X += dx;
-                draggedPoint.Y += dy;
+        //Check Mouse_Up
+
+        private void CheckDraggedFigure(MouseEventArgs e)
+        {
+            if (_draggedFigure != null)
+            {
+                var dx = e.Location.X - _oldMousePosition.X;
+                var dy = e.Location.Y - _oldMousePosition.Y;
+                if (_dragEl)
+                    _draggedFigure.Shift(dx, dy);
+                else if (_draggedPoint != Point.Empty)
+                    _draggedFigure.Shift(dx, dy, _draggedPoint);
+
+                _oldMousePosition = e.Location;
+                _draggedPoint.X += dx;
+                _draggedPoint.Y += dy;
                 Invalidate();
             }
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void CheckFigureListDragged(MouseEventArgs e)
         {
-            dragEl = false;
-        }
+            if (FigureListDragged.Count != 0)
+            {
+                var dx = e.Location.X - _oldMousePosition.X;
+                var dy = e.Location.Y - _oldMousePosition.Y;
+                if (_dragEl)
+                    foreach (var i in FigureListDragged)
+                        i.Shift(dx, dy);
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            dragEl = true;
+
+                _oldMousePosition = e.Location;
+
+                Invalidate();
+            }
         }
     }
 }

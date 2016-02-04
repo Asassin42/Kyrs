@@ -16,3 +16,12 @@ D:\04.09.14 учеба\3 курс 1 семестр\Юхно\Работы C#\Wind
 D:\04.09.14 учеба\3 курс 1 семестр\Юхно\Работы C#\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
 D:\04.09.14 учеба\3 курс 1 семестр\Юхно\Работы C#\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
 D:\04.09.14 учеба\3 курс 1 семестр\Юхно\Работы C#\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+C:\Users\Asassin\Documents\GitKyrs\Kyrs\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\Asassin\Documents\GitKyrs\Kyrs\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+C:\Users\Asassin\Documents\GitKyrs\Kyrs\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\Asassin\Documents\GitKyrs\Kyrs\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Asassin\Documents\GitKyrs\Kyrs\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\Asassin\Documents\GitKyrs\Kyrs\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Asassin\Documents\GitKyrs\Kyrs\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+C:\Users\Asassin\Documents\GitKyrs\Kyrs\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\Asassin\Documents\GitKyrs\Kyrs\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb

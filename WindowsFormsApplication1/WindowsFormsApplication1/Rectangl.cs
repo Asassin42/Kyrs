@@ -51,7 +51,7 @@ namespace WindowsFormsApplication1
 
         public Rectangle[] GetInnerRectangle()
         {
-            Rectangle[] o = new Rectangle[4];
+            var o = new Rectangle[4];
             for (int i = 0; i < 4; i++)
                 o[i] = new Rectangle(points[i].X - 4, points[i].Y - 4, 8, 8);
             return o;
@@ -59,7 +59,7 @@ namespace WindowsFormsApplication1
 
         public Region GetFigure()
         {
-            GraphicsPath path = new GraphicsPath();
+            var path = new GraphicsPath();
 
             path.AddPolygon(points);
 

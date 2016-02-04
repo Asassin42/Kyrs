@@ -12,11 +12,11 @@ namespace WindowsFormsApplication1
     {
         private Point[] points;
 
-        private int N;
+        private int _n;
         public Figure(int n)
         {
-            N = n;
-            points = new Point[N];
+            _n = n;
+            points = new Point[_n];
             SetRandomCoordinates();
         }
 
@@ -29,7 +29,7 @@ namespace WindowsFormsApplication1
 
         public void Shift(int dx, int dy, Point p)
         {
-            for (int i = 0; i < N; i++)
+            for (int i = 0; i < _n; i++)
                 if (p == points[i])
                 {
                     points[i].X += dx;
@@ -38,7 +38,7 @@ namespace WindowsFormsApplication1
         }
         public void Shift(int dx, int dy)
         {
-            for (int i = 0; i < N; i++)
+            for (int i = 0; i < _n; i++)
                 {
                     points[i].X += dx;
                     points[i].Y += dy;
@@ -47,8 +47,8 @@ namespace WindowsFormsApplication1
 
         public void SetRandomCoordinates()
         {
-            Random rnd = new Random();
-            for (int i = 0; i < N;i++ )
+            var rnd = new Random();
+            for (int i = 0; i < _n;i++ )
             {
                 points[i].X = rnd.Next(50, 500);
                 points[i].Y = rnd.Next(50, 500);
@@ -57,19 +57,19 @@ namespace WindowsFormsApplication1
 
         public Rectangle[] GetInnerRectangle()
         {
-            Rectangle[] o = new Rectangle[N];
-            for (int i = 0; i < N; i++)
+            var o = new Rectangle[_n];
+            for (int i = 0; i < _n; i++)
                 o[i] = new Rectangle(points[i].X - 4, points[i].Y - 4, 8, 8);
             return o;
         }
 
         public Region GetFigure()
         {
-            GraphicsPath path = new GraphicsPath();
+            var path = new GraphicsPath();
 
             path.AddPolygon(points);
 
-            Region region = new Region(path);
+            var region = new Region(path);
             path.Dispose();
 
             return region;

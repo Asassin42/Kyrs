@@ -47,7 +47,7 @@ namespace WindowsFormsApplication1
 
         public Rectangle[] GetInnerRectangle()
         {
-            Rectangle[] o = new Rectangle[2];
+            var o = new Rectangle[2];
             for (int i = 0; i < 2; i++)
                 o[i] = new Rectangle(points[i].X - 4, points[i].Y - 4, 8, 8);
             return o;
